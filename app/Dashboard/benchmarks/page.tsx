@@ -370,7 +370,7 @@ export default function BenchmarksPage() {
                         border: '1px solid rgba(255,255,255,0.1)',
                         borderRadius: '8px',
                       }}
-                      formatter={(value: number, name: string) => [`$${value.toFixed(0)}`, name]}
+                      formatter={(value, name) => [`$${Number(value ?? 0).toFixed(0)}`, String(name)]}
                       labelFormatter={(label) => {
                         const item = chartData.find(d => d.name === label)
                         return item?.fullName || label
