@@ -243,7 +243,7 @@ export default function VendorPaymentsPage() {
                     border: "1px solid rgba(255,255,255,0.1)",
                     borderRadius: "8px",
                   }}
-                  formatter={(value: number) => [`₹${value.toLocaleString()}`, "Amount"]}
+                  formatter={(value) => [`₹${Number(value ?? 0).toLocaleString()}`, "Amount"]}
                 />
                 <Bar dataKey="amount" fill="#10b981" radius={[4, 4, 0, 0]} />
               </BarChart>

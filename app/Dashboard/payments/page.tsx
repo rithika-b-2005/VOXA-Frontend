@@ -611,7 +611,7 @@ export default function PaymentsPage() {
                       border: "1px solid rgba(255,255,255,0.1)",
                       borderRadius: "8px",
                     }}
-                    formatter={(value: number) => [`₹${value.toLocaleString()}`, ""]}
+                    formatter={(value) => [`₹${Number(value ?? 0).toLocaleString()}`, ""]}
                   />
                   <Bar dataKey="inflow" fill="#10b981" radius={[4, 4, 0, 0]} name="Inflow" />
                   <Bar dataKey="outflow" fill="#ef4444" radius={[4, 4, 0, 0]} name="Outflow" />

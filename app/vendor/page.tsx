@@ -259,7 +259,7 @@ export default function VendorDashboard() {
                     border: "1px solid rgba(255,255,255,0.1)",
                     borderRadius: "8px",
                   }}
-                  formatter={(value: number) => [`₹${value.toLocaleString()}`, "Amount"]}
+                  formatter={(value) => [`₹${Number(value ?? 0).toLocaleString()}`, "Amount"]}
                 />
                 <Area
                   type="monotone"

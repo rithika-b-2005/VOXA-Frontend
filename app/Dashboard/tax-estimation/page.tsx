@@ -570,7 +570,7 @@ export default function TaxEstimationPage() {
                               border: '1px solid rgba(255,255,255,0.1)',
                               borderRadius: '8px',
                             }}
-                            formatter={(value: number) => [`$${value.toLocaleString(undefined, { maximumFractionDigits: 0 })}`, '']}
+                            formatter={(value) => [`$${Number(value ?? 0).toLocaleString(undefined, { maximumFractionDigits: 0 })}`, '']}
                           />
                           <Legend />
                         </PieChart>

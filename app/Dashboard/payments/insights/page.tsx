@@ -296,7 +296,7 @@ export default function CreditInsightsPage() {
                     border: "1px solid rgba(255,255,255,0.1)",
                     borderRadius: "8px",
                   }}
-                  formatter={(value: number) => [`₹${value.toLocaleString()}`, ""]}
+                  formatter={(value) => [`₹${Number(value ?? 0).toLocaleString()}`, ""]}
                 />
                 <Area type="monotone" dataKey="inflow" stroke="#10b981" fill="url(#inflowGrad)" name="Inflow" />
                 <Area type="monotone" dataKey="outflow" stroke="#ef4444" fill="url(#outflowGrad)" name="Outflow" />

@@ -249,7 +249,7 @@ export function PredictiveInsights() {
                     border: "1px solid rgba(255,255,255,0.1)",
                     borderRadius: "8px",
                   }}
-                  formatter={(value: number) => [`₹${value.toLocaleString()}`, ""]}
+                  formatter={(value) => [`₹${Number(value ?? 0).toLocaleString()}`, ""]}
                 />
                 <Area
                   type="monotone"
@@ -345,7 +345,7 @@ export function PredictiveInsights() {
                     border: "1px solid rgba(255,255,255,0.1)",
                     borderRadius: "8px",
                   }}
-                  formatter={(value: number) => [`₹${value.toLocaleString()}`, ""]}
+                  formatter={(value) => [`₹${Number(value ?? 0).toLocaleString()}`, ""]}
                 />
                 <Bar dataKey="current" fill="#3b82f6" radius={[0, 4, 4, 0]} name="Current" />
                 <Bar dataKey="predicted" fill="#8b5cf6" radius={[0, 4, 4, 0]} name="Predicted" opacity={0.6} />
