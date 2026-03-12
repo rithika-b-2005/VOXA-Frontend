@@ -116,7 +116,7 @@ export default function RemindersPage() {
   const [formName, setFormName] = React.useState("")
   const [formAmount, setFormAmount] = React.useState("")
   const [formDueDate, setFormDueDate] = React.useState("")
-  const [formFrequency, setFormFrequency] = React.useState<'ONCE' | 'WEEKLY' | 'MONTHLY' | 'YEARLY'>('MONTHLY')
+  const [formFrequency, setFormFrequency] = React.useState<'once' | 'weekly' | 'monthly' | 'yearly'>('monthly')
   const [formCategory, setFormCategory] = React.useState("")
   const [formIcon, setFormIcon] = React.useState("Other")
   const [formReminderDays, setFormReminderDays] = React.useState(3)
@@ -178,7 +178,7 @@ export default function RemindersPage() {
     setFormName("")
     setFormAmount("")
     setFormDueDate("")
-    setFormFrequency('MONTHLY')
+    setFormFrequency('monthly')
     setFormCategory("")
     setFormIcon("Other")
     setFormReminderDays(3)
@@ -223,7 +223,7 @@ export default function RemindersPage() {
       name: formName,
       amount: parseFloat(formAmount),
       dueDate: formDueDate,
-      frequency: formFrequency as 'once' | 'weekly' | 'monthly' | 'yearly',
+      frequency: formFrequency,
       categoryId: formCategory || undefined,
       remindDaysBefore: formReminderDays,
       notes: formNotes || undefined,
@@ -242,7 +242,7 @@ export default function RemindersPage() {
       name: formName,
       amount: parseFloat(formAmount),
       dueDate: formDueDate,
-      frequency: formFrequency as 'once' | 'weekly' | 'monthly' | 'yearly',
+      frequency: formFrequency,
       categoryId: formCategory || undefined,
       remindDaysBefore: formReminderDays,
       notes: formNotes || undefined,
@@ -660,7 +660,7 @@ export default function RemindersPage() {
                         ${reminder.amount.toFixed(2)}
                       </div>
                       <div className="text-sm text-center text-muted-foreground">
-                        {reminder.frequency === 'ONCE' ? 'One-time' : reminder.frequency.charAt(0) + reminder.frequency.slice(1).toLowerCase()}
+                        {reminder.frequency === 'once' ? 'One-time' : reminder.frequency.charAt(0).toUpperCase() + reminder.frequency.slice(1)}
                       </div>
                       <div className="text-center">
                         <span className={`text-sm ${isOverdue ? 'text-red-400' : isUpcoming ? 'text-yellow-400' : ''}`}>

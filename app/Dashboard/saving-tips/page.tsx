@@ -68,9 +68,14 @@ export default function SavingTipsPage() {
   // Sync API data to local state
   React.useEffect(() => {
     if (tipsData) {
-      setTips(tipsData.tips || [])
-      setSummary(tipsData.summary || null)
-      setSavedTips(tipsData.savedTipIds || [])
+      const data = tipsData as unknown as { tips?: SavingTip[]; summary?: SavingTipsSummary; savedTipIds?: string[] } | SavingTip[]
+      if (Array.isArray(data)) {
+        setTips(data)
+      } else {
+        setTips(data.tips || [])
+        setSummary(data.summary || null)
+        setSavedTips(data.savedTipIds || [])
+      }
     }
   }, [tipsData])
 

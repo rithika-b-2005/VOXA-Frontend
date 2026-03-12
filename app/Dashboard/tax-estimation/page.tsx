@@ -116,19 +116,19 @@ export default function TaxEstimationPage() {
       setLoading(true)
       try {
         const [bracketsRes, deductionsRes, estimatesRes] = await Promise.all([
-          taxEstimationApi.getBrackets(),
-          taxEstimationApi.getDeductions(),
+          taxEstimationApi.getBrackets(filingStatus),
+          taxEstimationApi.getDeductions(filingStatus),
           taxEstimationApi.getSavedEstimates(),
         ])
 
         if (bracketsRes.data) {
-          setTaxBrackets(bracketsRes.data)
+          setTaxBrackets(bracketsRes.data as unknown as { single: TaxBracket[]; married: TaxBracket[] })
         }
         if (deductionsRes.data) {
-          setStandardDeductions(deductionsRes.data)
+          setStandardDeductions(deductionsRes.data as unknown as { single: number; married: number; headOfHousehold: number })
         }
         if (estimatesRes.data) {
-          setSavedEstimates(estimatesRes.data || [])
+          setSavedEstimates((estimatesRes.data || []) as unknown as SavedEstimate[])
         }
       } catch (err) {
         console.error('Failed to fetch tax data:', err)
@@ -149,7 +149,7 @@ export default function TaxEstimationPage() {
 
     setCalculating(true)
     try {
-      const { data, error } = await taxEstimationApi.calculate({
+      const { data, error } = await (taxEstimationApi.calculate as unknown as (arg: unknown) => Promise<{ data: TaxCalculation | null; error: string | null }>)({
         income,
         filingStatus,
         deductionType,
@@ -184,7 +184,7 @@ export default function TaxEstimationPage() {
 
     setSaving(true)
     try {
-      const { data } = await taxEstimationApi.saveEstimate({
+      const { data } = await (taxEstimationApi.saveEstimate as unknown as (arg: unknown) => Promise<{ data: SavedEstimate | null; error: string | null }>)({
         name: `Tax Estimate - ${new Date().toLocaleDateString()}`,
         income: parseFloat(annualIncome) || 0,
         filingStatus,

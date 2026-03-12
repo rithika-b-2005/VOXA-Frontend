@@ -58,7 +58,7 @@ export default function RecommendationsPage() {
   const { user } = useAuth()
   const [selectedType, setSelectedType] = React.useState<string>("all")
   const [selectedCategory, setSelectedCategory] = React.useState<string>("all")
-  const { data: recommendationsData, loading, error, refetch } = useRecommendations(selectedType !== "all" ? selectedType : undefined)
+  const { data: recommendationsData, loading, error, refetch } = useRecommendations(selectedType !== "all" ? selectedType as 'article' | 'video' | 'podcast' | 'course' : undefined)
   const [content, setContent] = React.useState<ContentItem[]>([])
   const [summary, setSummary] = React.useState<RecommendationsSummary | null>(null)
   const [savedContent, setSavedContent] = React.useState<string[]>([])
@@ -69,10 +69,15 @@ export default function RecommendationsPage() {
   // Sync API data to local state
   React.useEffect(() => {
     if (recommendationsData) {
-      setContent(recommendationsData.items || [])
-      setSummary(recommendationsData.summary || null)
-      setSavedContent(recommendationsData.savedIds || [])
-      setCompletedContent(recommendationsData.completedIds || [])
+      const data = recommendationsData as unknown as { items?: ContentItem[]; summary?: RecommendationsSummary; savedIds?: string[]; completedIds?: string[] } | ContentItem[]
+      if (Array.isArray(data)) {
+        setContent(data)
+      } else {
+        setContent(data.items || [])
+        setSummary(data.summary || null)
+        setSavedContent(data.savedIds || [])
+        setCompletedContent(data.completedIds || [])
+      }
     }
   }, [recommendationsData])
 

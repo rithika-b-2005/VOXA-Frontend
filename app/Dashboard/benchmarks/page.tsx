@@ -70,8 +70,8 @@ export default function BenchmarksPage() {
   // Sync API data to local state
   React.useEffect(() => {
     if (benchmarkData) {
-      setBenchmarks(benchmarkData || [])
-      setSummary(null || null)
+      setBenchmarks((benchmarkData as unknown as BenchmarkCategory[]) || [])
+      setSummary(null)
     }
   }, [benchmarkData])
 

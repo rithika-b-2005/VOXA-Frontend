@@ -126,13 +126,12 @@ export default function SubscriptionsPage() {
 
   // Calculate totals
   const monthlyTotal = subscriptions
-    .filter(s => s.status === 'ACTIVE')
+    .filter(s => s.status === 'active')
     .reduce((sum, s) => {
       switch (s.frequency) {
-        case 'DAILY': return sum + s.amount * 30
-        case 'WEEKLY': return sum + s.amount * 4.33
-        case 'MONTHLY': return sum + s.amount
-        case 'YEARLY': return sum + s.amount / 12
+        case 'weekly': return sum + s.amount * 4.33
+        case 'monthly': return sum + s.amount
+        case 'yearly': return sum + s.amount / 12
         default: return sum
       }
     }, 0)
@@ -140,7 +139,7 @@ export default function SubscriptionsPage() {
   const yearlyTotal = monthlyTotal * 12
 
   const upcomingBills = subscriptions
-    .filter(s => s.status === 'ACTIVE')
+    .filter(s => s.status === 'active')
     .filter(s => {
       const daysUntil = Math.ceil((s.nextBillingDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24))
       return daysUntil <= 7 && daysUntil >= 0
@@ -313,9 +312,9 @@ export default function SubscriptionsPage() {
                   </div>
                   <span className="text-sm text-muted-foreground">Active Subscriptions</span>
                 </div>
-                <p className="text-2xl font-bold">{subscriptions.filter(s => s.status === 'ACTIVE').length}</p>
+                <p className="text-2xl font-bold">{subscriptions.filter(s => s.status === 'active').length}</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  {subscriptions.filter(s => s.status === 'PAUSED').length} paused
+                  {subscriptions.filter(s => s.status === 'paused').length} paused
                 </p>
               </div>
 
@@ -353,8 +352,8 @@ export default function SubscriptionsPage() {
                   <span className="text-sm text-muted-foreground">Avg. per Subscription</span>
                 </div>
                 <p className="text-2xl font-bold">
-                  ${subscriptions.filter(s => s.status === 'ACTIVE').length > 0
-                    ? (monthlyTotal / subscriptions.filter(s => s.status === 'ACTIVE').length).toFixed(2)
+                  ${subscriptions.filter(s => s.status === 'active').length > 0
+                    ? (monthlyTotal / subscriptions.filter(s => s.status === 'active').length).toFixed(2)
                     : '0.00'}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">per month</p>
@@ -588,7 +587,7 @@ export default function SubscriptionsPage() {
                       key={sub.id}
                       className={`grid grid-cols-[40px_1fr_120px_100px_140px_100px_80px] gap-4 px-6 py-4 items-center hover:bg-white/5 ${
                         index !== filteredSubscriptions.length - 1 ? "border-b border-white/10" : ""
-                      } ${selectedRows.includes(sub.id) ? "bg-white/10" : ""} ${sub.status === 'PAUSED' ? 'opacity-60' : ''}`}
+                      } ${selectedRows.includes(sub.id) ? "bg-white/10" : ""} ${sub.status === 'paused' ? 'opacity-60' : ''}`}
                     >
                       <div className="flex items-center">
                         <Checkbox
@@ -632,8 +631,8 @@ export default function SubscriptionsPage() {
                       </div>
                       <div className="flex justify-center">
                         <span className={`px-2 py-1 rounded text-xs ${
-                          sub.status === 'ACTIVE' ? 'bg-green-500/20 text-green-400' :
-                          sub.status === 'PAUSED' ? 'bg-yellow-500/20 text-yellow-400' :
+                          sub.status === 'active' ? 'bg-green-500/20 text-green-400' :
+                          sub.status === 'paused' ? 'bg-yellow-500/20 text-yellow-400' :
                           'bg-red-500/20 text-red-400'
                         }`}>
                           {sub.status.charAt(0) + sub.status.slice(1).toLowerCase()}
@@ -645,9 +644,9 @@ export default function SubscriptionsPage() {
                           size="sm"
                           className="h-8 w-8 p-0"
                           onClick={() => toggleStatus(sub.id)}
-                          title={sub.status === 'ACTIVE' ? 'Pause' : 'Resume'}
+                          title={sub.status === 'active' ? 'Pause' : 'Resume'}
                         >
-                          {sub.status === 'ACTIVE' ? (
+                          {sub.status === 'active' ? (
                             <IconX className="h-4 w-4 text-muted-foreground hover:text-yellow-400" />
                           ) : (
                             <IconCheck className="h-4 w-4 text-muted-foreground hover:text-green-400" />
